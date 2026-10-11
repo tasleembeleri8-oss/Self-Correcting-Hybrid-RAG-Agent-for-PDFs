@@ -210,4 +210,4 @@ Developed as a Python and AI project exploring Retrieval-Augmented Generation, h
 ![Question Answering](screenshots/question%20answering.png)
 
 ### Multiple Document Support
-![Multiple Document Support](screenshots/multiple%20document%20support.png)
+![Multiple Document Support](screenshots/multiple-document-support.png)

@@ -2,6 +2,12 @@
 
 An AI-powered PDF question-answering application built with **Python, FastAPI, ChromaDB, BM25, LangGraph, and Groq**. Upload a PDF, ask questions about its contents, and receive answers based on retrieved document passages.
 
+## 🚀 Live Demo
+
+**Try the project online:** [DocMind AI — Chat with your PDFs](https://self-correcting-hybrid-rag-agent-for-pdfs.onrender.com)
+
+Upload a text-based PDF and ask questions about its contents.
+
 ## Overview
 
 This project implements a Retrieval-Augmented Generation (RAG) system that helps users interact with PDF documents through a conversational interface.

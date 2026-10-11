@@ -102,7 +102,24 @@ function renderWelcome(info) {
 }
 el.choose.onclick = () => el.file.click();
 el.replace.onclick = () => { if (!busy) el.file.click(); };
-el.newBtn.onclick = () => { if (busy) return; el.file.click(); };
+el.newBtn.onclick = () => {
+  if (busy) return;
+
+  saveActiveChat();
+  activeDocId = null;
+
+  el.chat.replaceChildren();
+  el.q.value = "";
+  el.q.style.height = "";
+
+  el.fileName.textContent = "";
+  setStatus("", "");
+
+  updateActiveHeader();
+  renderSidebar();
+  showUploadPanel();
+  setComposer(false);
+};
 el.file.onchange = () => { if (el.file.files[0]) handleFile(el.file.files[0]); el.file.value = ""; };
 ["dragenter", "dragover"].forEach(t => el.drop.addEventListener(t, e => { e.preventDefault(); el.drop.classList.add("over"); }));
 ["dragleave", "drop"].forEach(t => el.drop.addEventListener(t, e => { e.preventDefault(); el.drop.classList.remove("over"); }));

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f8fc">
+<title>DocMind AI — Chat with your documents</title>
+<style>
+:root{color-scheme:light;--bg:#f7f8fc;--panel:#fff;--ink:#20243a;--muted:#737990;--line:#e7e9f2;--accent:#6558e8;--accent2:#5144d4;--soft:#f0efff;--green:#17835d;--red:#b42318;--shadow:0 14px 45px rgba(39,42,88,.07)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}button,textarea,input{font:inherit}button{cursor:pointer}button:focus-visible,textarea:focus-visible{outline:3px solid #bdb8ff;outline-offset:2px}button:disabled{opacity:.55;cursor:not-allowed}.app{height:100%;min-height:580px;display:grid;grid-template-columns:258px minmax(0,1fr)}
+.sidebar{background:#fff;border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;gap:26px}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.brand-mark{height:39px;width:39px;border-radius:13px;background:linear-gradient(140deg,#8275ff,#5548d9);display:grid;place-items:center;color:#fff;box-shadow:0 7px 16px #6558e833}.brand-mark svg{width:22px;height:22px}.brand-name{font-weight:800;letter-spacing:-.5px;font-size:19px}.brand-name span{color:var(--accent)}.brand-caption{font-size:11px;color:var(--muted);margin-top:-2px}.side-label{font-size:10px;letter-spacing:1.4px;font-weight:800;color:#9a9db0;padding:0 10px;margin-bottom:-15px}.new-btn{border:0;border-radius:12px;background:var(--accent);color:white;padding:12px 14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 8px 18px #6558e82b}.new-btn:hover,.primary:hover{background:var(--accent2)}.document-list{display:flex;flex-direction:column;gap:10px;padding:0 3px}.document-card{width:100%;text-align:left;font:inherit;color:inherit;display:flex;align-items:flex-start;gap:10px;padding:11px 10px;border:1px solid var(--line);border-radius:12px;background:#fafaff;min-width:0;cursor:pointer}.document-card:hover{border-color:#c7c2ff;background:#f5f3ff}.document-card.active{border-color:#bcb5ff;background:#f0efff;box-shadow:0 0 0 2px #6558e80c}.document-card .pdf-badge{flex-shrink:0;width:30px;height:34px;display:grid;place-items:center;border-radius:8px;background:#fff0f0;color:#d64c54;font-size:9px;font-weight:850;border:1px solid #ffe0e2}.document-info{min-width:0;flex:1}.document-title{font-size:12px;font-weight:750;overflow-wrap:anywhere;line-height:1.4}.document-status{font-size:10px;color:var(--muted);margin-top:5px;display:flex;align-items:center;gap:5px}.document-status .mini-dot{width:6px;height:6px;border-radius:50%;background:#23a36d;flex-shrink:0}.document-empty{font-size:11px;color:var(--muted);padding:0 10px;line-height:1.6}.side-note{margin-top:auto;border:1px solid var(--line);border-radius:15px;padding:15px;background:linear-gradient(150deg,#fbfaff,#f4f3ff)}.note-icon{width:32px;height:32px;display:grid;place-items:center;background:#e9e6ff;color:var(--accent);border-radius:10px;margin-bottom:10px}.side-note strong{font-size:13px;display:block}.side-note p{font-size:12px;color:var(--muted);margin:5px 0 0}.privacy{font-size:11px;color:#9699aa;padding:0 8px;display:flex;gap:7px;align-items:center}
+.workspace{min-width:0;display:flex;flex-direction:column;height:100%;overflow:hidden}.topbar{height:76px;flex-shrink:0;background:rgba(255,255,255,.8);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:16px}.page-title{font-size:16px;font-weight:750}.page-subtitle{font-size:12px;color:var(--muted);margin-top:1px}.top-actions{display:flex;align-items:center;gap:10px}.status-pill{font-size:12px;color:var(--green);background:#eaf8f1;border:1px solid #d2f0e1;padding:6px 10px;border-radius:30px;display:flex;align-items:center;gap:7px}.status-dot{width:7px;height:7px;background:#23a36d;border-radius:50%}.icon-btn{border:1px solid var(--line);background:#fff;color:var(--muted);width:37px;height:37px;border-radius:11px;display:grid;place-items:center}.icon-btn:hover{border-color:#c7c2ff;color:var(--accent)}
+main{flex:1;min-height:0;display:flex;flex-direction:column;max-width:1120px;width:100%;margin:0 auto}.upload-view{overflow:auto;flex:1;padding:43px 26px 35px;display:flex;flex-direction:column;align-items:center}.hero{text-align:center;max-width:660px;margin-bottom:30px}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:30px;background:#eeecff;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase}.hero h1{font-size:clamp(28px,4vw,42px);line-height:1.15;letter-spacing:-1.5px;margin:17px 0 12px}.hero h1 em{font-style:normal;color:var(--accent)}.hero p{font-size:15px;color:var(--muted);max-width:520px;margin:0 auto}.drop-card{width:100%;max-width:690px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:10px;box-shadow:var(--shadow)}#drop{border:1.5px dashed #d2d0ee;border-radius:16px;background:linear-gradient(145deg,#fcfbff,#f8f7ff);min-height:260px;padding:35px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:.18s}#drop.over{border-color:var(--accent);background:#f0efff;transform:scale(.995)}.upload-icon{width:62px;height:62px;border-radius:19px;background:#eae7ff;color:var(--accent);display:grid;place-items:center;margin-bottom:16px}.upload-icon svg{width:29px;height:29px}#drop h2{font-size:19px;letter-spacing:-.3px;margin:0 0 6px}#drop p{font-size:13px;color:var(--muted);margin:0 0 18px}.primary{border:0;border-radius:11px;padding:11px 17px;background:var(--accent);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px}.secondary{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:#fff;color:var(--ink);font-weight:650}.secondary:hover{border-color:#c7c2ff;color:var(--accent)}#fileName{font-size:12px;color:var(--muted);margin-top:12px;max-width:100%;overflow-wrap:anywhere;min-height:18px}#status{font-size:12px;min-height:21px;margin-top:6px}#status.error{color:var(--red)}#status.ok{color:var(--green)}#status.busy{color:var(--muted)}.limits{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:11px;padding:15px 4px 0}.limits span{display:flex;align-items:center;gap:6px}.features{width:100%;max-width:690px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}.feature{border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px}.feature-icon{color:var(--accent);font-size:17px;margin-bottom:5px}.feature strong{display:block;font-size:12px}.feature p{font-size:11px;color:var(--muted);margin:3px 0 0}
+#docChip{display:none;align-items:center;gap:10px;min-width:0}.doc-icon{width:36px;height:36px;display:grid;place-items:center;background:#fff0f0;color:#d64c54;border:1px solid #ffe0e2;border-radius:10px;flex-shrink:0}#docName{font-size:13px;font-weight:700;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#docMeta{font-size:11px;color:var(--muted)}#chat{display:none;flex:1;min-height:0;overflow-y:auto;padding:26px clamp(16px,4vw,48px);flex-direction:column;gap:19px;scroll-behavior:smooth}#chat.on{display:flex}.msg{max-width:min(760px,92%);display:flex;flex-direction:column;gap:7px}.msg.user{align-self:flex-end;align-items:flex-end}.msg.bot{align-self:flex-start;align-items:flex-start}.msg-head{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);font-weight:700}.avatar{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:#e9e6ff;color:var(--accent);font-size:12px}.user .avatar{background:#e7e9f4;color:#555b75}.bubble{padding:13px 16px;border-radius:17px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;font-size:14px}.user .bubble{background:var(--accent);color:#fff;border-bottom-right-radius:5px}.bot .bubble{background:#fff;border:1px solid var(--line);box-shadow:0 3px 12px #28265a08;border-bottom-left-radius:5px}.bot .bubble.err{background:#fff4f3;border-color:#ffd3ce;color:var(--red)}.trace{font-size:11px;color:var(--muted);padding:3px 2px;max-width:100%}.trace summary{cursor:pointer;color:#6d67b3}.trace .rewrote{color:var(--accent);font-weight:700}.passage{margin-top:8px;padding:10px 12px;border-left:3px solid var(--accent);background:#f8f7ff;border-radius:4px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:160px;overflow-y:auto;color:#535771;font-size:12px}.suggest{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 0 33px;max-width:760px}.suggest button{border:1px solid #dedbf9;background:#fff;color:#5952a6;border-radius:10px;padding:8px 12px;font-size:12px}.suggest button:hover{background:var(--soft);border-color:#c8c2ff}.dots{display:inline-flex;gap:5px;align-items:center;height:1.2em}.dots i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.2s infinite ease-in-out}.dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+#composer{display:none;padding:13px clamp(14px,4vw,48px) 20px;background:linear-gradient(0deg,var(--bg) 80%,transparent)}#composer.on{display:block}.composer-inner{max-width:820px;margin:0 auto}.box{display:flex;gap:10px;align-items:flex-end;background:#fff;border:1px solid #dedfed;border-radius:17px;padding:10px 10px 10px 16px;box-shadow:0 8px 24px #25234e0b}.box:focus-within{border-color:#bdb7ff;box-shadow:0 0 0 3px #6558e811}#q{flex:1;min-width:0;border:0;outline:0;resize:none;background:transparent;max-height:140px;padding:7px 0;color:var(--ink)}#q:disabled{cursor:not-allowed}#q::placeholder{color:#a0a3b4}#send{width:42px;height:42px;padding:0;border-radius:12px;flex-shrink:0}#hint{text-align:center;font-size:10px;color:#989bad;margin-top:9px}.composer-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:11px;color:var(--muted);margin:0 2px 8px}.composer-top strong{color:#626780;font-weight:650}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{display:none}.topbar{height:66px;padding:0 16px}.page-subtitle{display:none}.upload-view{padding:30px 16px}.hero h1{letter-spacing:-.8px}.hero p{font-size:13px}.features{gap:8px}.feature{padding:11px}.feature p{display:none}.feature strong{font-size:11px}#docName{max-width:35vw}#docMeta{display:none}#chat{padding:20px 14px}.msg{max-width:96%}.suggest{margin-left:0}.status-pill{font-size:10px;padding:5px 7px}.top-actions{gap:6px}}
+@media(max-width:430px){.features{grid-template-columns:1fr}.feature{display:flex;align-items:center;gap:10px}.feature-icon{margin:0}.limits{gap:8px;flex-direction:column;align-items:center}#replaceBtn{padding:7px 9px;font-size:11px}.hero{margin-bottom:22px}#drop{min-height:230px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" aria-label="Application sidebar">
+  <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1"/><circle cx="12" cy="12" r="4"/></svg></div><div><div class="brand-name">DocMind <span>AI</span></div><div class="brand-caption">Your document companion</div></div></div>
+  <button class="new-btn" id="newBtn" type="button"><span aria-hidden="true">＋</span> New conversation</button>
+  <div class="side-label">YOUR DOCUMENT</div>
+  <div id="sidebarDocument" class="document-list"><div class="document-empty">No document uploaded yet.<br>Choose a PDF to get started.</div></div>
+  <div class="side-label">WORKSPACE</div>
+  <div style="padding:0 10px;color:var(--muted);font-size:12px;line-height:1.7">Upload a document, then ask questions in natural language. Answers are grounded in your PDF.</div>
+  <div class="side-note"><div class="note-icon" aria-hidden="true">✦</div><strong>Designed for your documents</strong><p>Explore key findings, summarize long reports, and find details without reading every page.</p></div>
+  <div class="privacy"><span aria-hidden="true">◈</span> Your document is processed for this session</div>
+</aside>
+<section class="workspace">
+<header class="topbar"><div><div class="page-title">Document chat</div><div class="page-subtitle">Ask questions. Find answers. Understand more.</div></div><div class="top-actions"><div class="status-pill"><span class="status-dot"></span> AI assistant ready</div><div id="docChip"><div class="doc-icon" aria-hidden="true">PDF</div><div style="min-width:0"><div id="docName"></div><div id="docMeta"></div></div><button class="secondary" id="replaceBtn" type="button">Replace</button></div></div></header>
+<main>
+<section id="upload" class="upload-view" aria-label="Upload a PDF">
+  <div class="hero"><div class="eyebrow"><span aria-hidden="true">✦</span> YOUR AI READING SPACE</div><h1>Your documents,<br><em>understood in seconds.</em></h1><p>Upload a PDF and have a conversation with it. Get clear answers, explore ideas, and find the details that matter.</p></div>
+  <div class="drop-card"><div id="drop"><div class="upload-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m-5 5 5-5 5 5"/><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"/></svg></div><h2>Drop your PDF right here</h2><p>Bring a report, research paper, notes, or any text-based PDF.</p><button class="primary" id="chooseBtn" type="button"><span aria-hidden="true">↑</span> Choose a PDF</button><div id="fileName"></div><div id="status" role="status" aria-live="polite"></div></div></div>
+  <div class="limits"><span>✓ PDF files only</span><span>↗ Up to 10 MB</span><span>▤ Up to 200 pages</span></div>
+  <div class="features"><div class="feature"><div class="feature-icon">⌕</div><div><strong>Ask naturally</strong><p>Use your own words to find answers.</p></div></div><div class="feature"><div class="feature-icon">▤</div><div><strong>Grounded answers</strong><p>See the passages used to respond.</p></div></div><div class="feature"><div class="feature-icon">✧</div><div><strong>Smarter search</strong><p>Search can be refined when needed.</p></div></div></div>
+</section>
+<section id="chat" aria-live="polite" aria-label="Conversation"></section>
+<section id="composer" aria-label="Ask a question"><div class="composer-inner"><div class="composer-top"><strong>Ask your document</strong><span>Answers are based on your uploaded PDF</span></div><div class="box"><textarea id="q" rows="1" maxlength="500" placeholder="Ask a question about this PDF…" disabled></textarea><button class="primary" id="send" type="button" disabled aria-label="Send question"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button></div><div id="hint">Press Enter to send · Shift + Enter for a new line</div></div></section>
+</main>
+</section>
+</div>
+<input type="file" id="file" accept="application/pdf,.pdf" hidden>
+<script>
+const MAX_BYTES = 10 * 1024 * 1024;
+const $ = id => document.getElementById(id);
+const el = { file: $("file"), drop: $("drop"), choose: $("chooseBtn"), replace: $("replaceBtn"), newBtn: $("newBtn"), sidebarDocument: $("sidebarDocument"), fileName: $("fileName"), status: $("status"), upload: $("upload"), chat: $("chat"), composer: $("composer"), q: $("q"), send: $("send"), chip: $("docChip"), docName: $("docName"), docMeta: $("docMeta") };
+let documents = [];
+let activeDocId = null;
+let busy = false;
+function activeDoc() { return documents.find(d => d.id === activeDocId) || null; }
+function setStatus(text, kind) { el.status.textContent = text; el.status.className = kind || ""; }
+function errorText(data, fallback) { return data && typeof data.detail === "string" ? data.detail : fallback; }
+function setComposer(enabled) { el.q.disabled = !enabled || busy; el.send.disabled = !enabled || busy; el.q.placeholder = enabled ? "Ask a question about this PDF…" : "Upload a PDF to start asking questions"; }
+function showUploadPanel() { el.upload.style.display = "flex"; el.chat.classList.remove("on"); el.composer.classList.remove("on"); }
+function saveActiveChat() {
+  const d = activeDoc();
+  if (d) d.chatNodes = Array.from(el.chat.childNodes).map(node => node.cloneNode(true));
+}
+function renderSidebar() {
+  el.sidebarDocument.replaceChildren();
+  if (!documents.length) {
+    const empty = document.createElement("div"); empty.className = "document-empty"; empty.innerHTML = "No documents uploaded yet.<br>Choose a PDF to get started."; el.sidebarDocument.appendChild(empty); return;
+  }
+  documents.forEach(d => {
+    const card = document.createElement("button"); card.type = "button"; card.className = "document-card" + (d.id === activeDocId ? " active" : ""); card.setAttribute("aria-current", d.id === activeDocId ? "page" : "false"); card.title = d.filename;
+    const badge = document.createElement("span"); badge.className = "pdf-badge"; badge.textContent = "PDF";
+    const info = document.createElement("span"); info.className = "document-info";
+    const name = document.createElement("span"); name.className = "document-title"; name.textContent = d.filename;
+    const status = document.createElement("span"); status.className = "document-status";
+    const dot = document.createElement("span"); dot.className = "mini-dot";
+    const statusText = document.createElement("span"); statusText.textContent = d.expired ? "Session expired · re-upload" : "Ready to chat";
+    status.append(dot, statusText); info.append(name, status); card.append(badge, info);
+    card.addEventListener("click", () => switchDocument(d.id)); el.sidebarDocument.appendChild(card);
+  });
+}
+function updateActiveHeader() {
+  const d = activeDoc();
+  if (!d) { el.chip.style.display = "none"; el.chip.classList.remove("on"); return; }
+  el.docName.textContent = d.filename; el.docMeta.textContent = d.pages + " pages · " + d.chunks + " passages";
+  el.chip.style.display = "flex"; el.chip.classList.add("on");
+}
+function switchDocument(id) {
+  if (busy || id === activeDocId) return;
+  saveActiveChat();
+  const d = documents.find(item => item.id === id); if (!d) return;
+  activeDocId = id; renderSidebar(); updateActiveHeader();
+  el.upload.style.display = "none"; el.chat.replaceChildren();
+  if (d.chatNodes && d.chatNodes.length) d.chatNodes.forEach(node => el.chat.appendChild(node.cloneNode(true)));
+  else renderWelcome(d);
+  el.chat.classList.add("on"); el.composer.classList.add("on"); setComposer(!d.expired); el.chat.scrollTop = el.chat.scrollHeight;
+}
+function renderWelcome(info) {
+  el.chat.replaceChildren();
+  addBot("Your PDF is ready. I indexed " + info.pages + " pages of “" + info.filename + "”. Ask me to summarize it, explain a section, or find a specific detail. I’ll answer using this document.");
+  const box = document.createElement("div"); box.className = "suggest";
+  ["Summarize this document", "What are the main conclusions?", "What are the key findings?"].forEach(t => { const b = document.createElement("button"); b.type = "button"; b.textContent = t; b.onclick = () => { el.q.value = t; ask(); }; box.appendChild(b); });
+  el.chat.appendChild(box);
+}
+el.choose.onclick = () => el.file.click();
+el.replace.onclick = () => { if (!busy) el.file.click(); };
+el.newBtn.onclick = () => { if (busy) return; el.file.click(); };
+el.file.onchange = () => { if (el.file.files[0]) handleFile(el.file.files[0]); el.file.value = ""; };
+["dragenter", "dragover"].forEach(t => el.drop.addEventListener(t, e => { e.preventDefault(); el.drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(t => el.drop.addEventListener(t, e => { e.preventDefault(); el.drop.classList.remove("over"); }));
+el.drop.addEventListener("drop", e => { if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+window.addEventListener("dragover", e => e.preventDefault()); window.addEventListener("drop", e => e.preventDefault());
+async function handleFile(file) {
+  if (busy) return;
+  el.fileName.textContent = file.name;
+  if (!file.name.toLowerCase().endsWith(".pdf")) return setStatus("Only PDF files are accepted.", "error");
+  if (file.size === 0) return setStatus("That file is empty.", "error");
+  if (file.size > MAX_BYTES) return setStatus("That file is larger than 10 MB.", "error");
+  busy = true; setComposer(false); el.choose.disabled = true; el.newBtn.disabled = true; el.replace.disabled = true;
+  setStatus("Reading, splitting and indexing your PDF. Larger files may take a minute…", "busy");
+  try {
+    const form = new FormData(); form.append("file", file);
+    const res = await fetch("/upload", { method: "POST", body: form });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(errorText(data, "Upload failed. Please try again."));
+    saveActiveChat();
+    const existing = documents.find(d => d.id === data.document_id);
+    const doc = { id: data.document_id, filename: data.filename, pages: data.pages, chunks: data.chunks, expired: false, chatNodes: [] };
+    if (existing) documents = documents.filter(d => d.id !== existing.id);
+    documents.unshift(doc); activeDocId = doc.id;
+    updateActiveHeader(); renderSidebar(); renderWelcome(doc); el.upload.style.display = "none"; el.chat.classList.add("on"); el.composer.classList.add("on"); setStatus("", "");
+  } catch (err) { setStatus(err.message || "Upload failed. Please try again.", "error"); if (activeDoc()) { el.upload.style.display = "none"; el.chat.classList.add("on"); el.composer.classList.add("on"); } }
+  finally { busy = false; el.choose.disabled = false; el.newBtn.disabled = false; el.replace.disabled = false; setComposer(!!activeDoc() && !activeDoc().expired); if (activeDoc()) el.q.focus(); }
+}
+function addMsg(who, text) {
+  const wrap = document.createElement("div"); wrap.className = "msg " + who;
+  const head = document.createElement("div"); head.className = "msg-head";
+  const avatar = document.createElement("span"); avatar.className = "avatar"; avatar.textContent = who === "bot" ? "✦" : "Y";
+  const label = document.createElement("span"); label.textContent = who === "bot" ? "DOCMIND AI" : "YOU"; head.append(avatar, label);
+  const bubble = document.createElement("div"); bubble.className = "bubble"; bubble.textContent = text;
+  wrap.append(head, bubble); el.chat.appendChild(wrap); el.chat.scrollTop = el.chat.scrollHeight; return { wrap, bubble };
+}
+const addBot = t => addMsg("bot", t);
+function addTrace(wrap, retries, passages) {
+  if (!Array.isArray(passages) || passages.length === 0) return;
+  const d = document.createElement("details"); d.className = "trace"; const s = document.createElement("summary");
+  if (retries > 0) { const r = document.createElement("span"); r.className = "rewrote"; r.textContent = "Refined search " + retries + (retries === 1 ? " time" : " times"); s.append(r, " · Show passages used"); }
+  else s.textContent = "Show passages used";
+  d.appendChild(s); passages.forEach(p => { const x = document.createElement("div"); x.className = "passage"; x.textContent = p; d.appendChild(x); }); wrap.appendChild(d);
+}
+async function ask() {
+  const question = el.q.value.trim(); const doc = activeDoc();
+  if (busy) return; if (!doc) return addBot("Upload a PDF first, then ask your question."); if (doc.expired) return addBot("This document's temporary session has expired. Please upload it again to continue."); if (question.length < 3) return;
+  document.querySelectorAll(".suggest").forEach(n => n.remove()); addMsg("user", question); el.q.value = ""; el.q.style.height = ""; busy = true; setComposer(true);
+  const pending = addBot(""); const dots = document.createElement("span"); dots.className = "dots"; dots.setAttribute("aria-label", "Thinking"); dots.append(document.createElement("i"), document.createElement("i"), document.createElement("i")); pending.bubble.appendChild(dots); el.chat.scrollTop = el.chat.scrollHeight;
+  try {
+    const res = await fetch("/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ document_id: doc.id, question }) });
+    const data = await res.json().catch(() => ({})); if (res.status === 404) { doc.expired = true; renderSidebar(); }
+    if (!res.ok) throw new Error(errorText(data, "That question could not be processed."));
+    pending.bubble.textContent = data.answer; addTrace(pending.wrap, data.retries, data.passages || []);
+  } catch (err) { pending.bubble.textContent = err.message || "Something went wrong. Please try again."; pending.bubble.classList.add("err"); }
+  finally { busy = false; saveActiveChat(); setComposer(!!activeDoc() && !activeDoc().expired); if (activeDoc() && !activeDoc().expired) el.q.focus(); el.chat.scrollTop = el.chat.scrollHeight; }
+}
+el.send.onclick = ask;
+el.q.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(); } });
+el.q.addEventListener("input", () => { el.q.style.height = "auto"; el.q.style.height = Math.min(el.q.scrollHeight, 140) + "px"; });
+renderSidebar(); setComposer(false);
+
+</script>
+</body>
+</html>

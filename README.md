@@ -44,8 +44,8 @@ The system also includes a self-correction workflow that can evaluate retrieved 
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd rag-agent
+git clone https://github.com/tasleembeleri8-oss/Self-Correcting-Hybrid-RAG-Agent-for-PDFs.git
+cd Self-Correcting-Hybrid-RAG-Agent-for-PDFs
 ```
 
 Replace `YOUR_GITHUB_REPOSITORY_URL` with your actual repository URL.

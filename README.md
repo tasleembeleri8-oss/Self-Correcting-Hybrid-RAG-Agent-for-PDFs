@@ -197,10 +197,11 @@ The evaluation scripts are located in the `eval/` directory. Evaluation datasets
 
 Developed as a Python and AI project exploring Retrieval-Augmented Generation, hybrid information retrieval, document question answering, and self-correcting AI workflows.
 
+
 ## Screenshots
 
 ### Application Interface
-![DocMind AI](screenshots/new%20conversation.png)
+![New Conversation](screenshots/new%20conversation.png)
 
 ### PDF Upload
 ![PDF Upload](screenshots/uploade%20pdf.png)
